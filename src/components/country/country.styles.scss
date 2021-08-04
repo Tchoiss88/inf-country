@@ -1,0 +1,16 @@
+.country {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  font-size: 1rem;
+  width: 450px;
+}
+
+.flag-page {
+  width: 2rem;
+  height: 1.5rem;
+}
+
+.country:hover {
+  background-color: #fff;
+}
