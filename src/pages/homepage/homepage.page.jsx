@@ -26,21 +26,20 @@ const HomePage = () => {
 
   return (
     <div className="homepage">
-      <SearchBox placeholder="Name a Country" />
+      <SearchBox
+        placeholder="Name a Country"
+        className="search-homepage"
+        handleChange="#"
+      />
       <div className="regions">
         {region.map((item, i) => (
-          <div key={i} className="input-region">
-            <input
-              className="input-box"
-              type="checkbox"
-              name={item}
-              value={item}
-            />
-            <label className="input-label">{item}</label>
+          <div key={i} className="container">
+            <input className="input" type="checkbox" name={item} value={item} />
+            <spam className="checkmark">{item}</spam>
           </div>
         ))}
-        <CountryList data={data} />
       </div>
+      <CountryList data={data} />
     </div>
   );
 };

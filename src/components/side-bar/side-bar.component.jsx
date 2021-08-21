@@ -30,7 +30,11 @@ const SideBar = () => {
               </Link>
             </li>
             {/* TODO Fucntionaliti */}
-            <SearchBox placeholder="Favorite Search" />
+            <SearchBox
+              placeholder="Favorite Search"
+              className="search"
+              handleChange="#"
+            />
             {SidebarData.map((item, index) => {
               return (
                 <li key={index} className="sidebar-item">
