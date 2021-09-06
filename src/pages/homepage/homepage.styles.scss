@@ -34,10 +34,10 @@
   }
   .input:hover ~ .checkmark {
     background-color: #ffffff;
-    border-radius: 15px;
+    border-radius: 5px;
   }
   .container input:checked ~ .checkmark {
     background-color: #ffffff;
-    border-radius: 15px;
+    border-radius: 5px;
   }
 }

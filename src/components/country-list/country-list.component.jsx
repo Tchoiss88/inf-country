@@ -7,8 +7,8 @@ import './country-list.styles.scss';
 const CountryList = props => {
   return (
     <div className="country-list">
-      {props.data.map(curr => (
-        <Country key={curr.numericCod} country={curr.name} flag={curr.flag} />
+      {props.data.map((curr, i) => (
+        <Country key={`countryList${i}`} country={curr} />
       ))}
     </div>
   );

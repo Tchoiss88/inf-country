@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import SearchBox from '../../components/search-box/search-box.component';
-import ButtonRemove from '../../components/button-remove/button-remove.component';
 
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons/';
+import { removeCountry } from '../../redux/actions';
 
-import { SidebarData } from '../../data/sidebar.data';
 import './side-bar.styles.scss';
 
 const SideBar = () => {
   const [sidebar, setSidebar] = useState(false);
   const showSidebar = () => setSidebar(!sidebar);
+  const dispatch = useDispatch();
+
+  const [searchField, setSearchField] = useState('');
+
+  const country = useSelector(state => state);
+
+  const handleChange = e => {
+    setSearchField(e.target.value);
+  };
+
+  const filteredCountry = country.filter(curr =>
+    curr.name.toLowerCase().includes(searchField.toLowerCase())
+  );
 
   return (
     <>
@@ -29,18 +42,23 @@ const SideBar = () => {
                 <AiIcons.AiOutlineClose onClick={showSidebar} />
               </Link>
             </li>
-            {/* TODO Fucntionaliti */}
+
             <SearchBox
               placeholder="Favorite Search"
               className="search"
-              handleChange="#"
+              handleChange={handleChange}
             />
-            {SidebarData.map((item, index) => {
+            {filteredCountry.map((item, index) => {
               return (
                 <li key={index} className="sidebar-item">
                   <img alt="flag" src={item.flag} className="flag-item" />
                   <span>{item.name}</span>
-                  <ButtonRemove />
+                  <button
+                    className="btn btn-remove"
+                    onClick={() => dispatch(removeCountry(item))}
+                  >
+                    -
+                  </button>
                 </li>
               );
             })}
