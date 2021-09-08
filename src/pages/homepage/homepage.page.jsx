@@ -51,7 +51,6 @@ const HomePage = () => {
     countryName === -1
       ? filterRegions.current.regions.push(name)
       : filterRegions.current.regions.splice(countryName, 1);
-    console.log(name, countryName);
     filterAndSearch();
   };
 
