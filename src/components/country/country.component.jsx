@@ -45,7 +45,7 @@ const Country = props => {
         <br />
         <span>Population: {props.country.population}</span>
         <br />
-        <span>Area: {props.country.area}</span>
+        <span>Area: {`${props.country.area} Km2`}</span>
       </div>
     </div>
   );

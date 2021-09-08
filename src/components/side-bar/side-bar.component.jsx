@@ -23,10 +23,6 @@ const SideBar = () => {
     setSearchField(e.target.value);
   };
 
-  const filteredCountry = country.filter(curr =>
-    curr.name.toLowerCase().includes(searchField.toLowerCase())
-  );
-
   return (
     <>
       <IconContext.Provider value={{ color: '#fff' }}>
@@ -48,20 +44,24 @@ const SideBar = () => {
               className="search"
               handleChange={handleChange}
             />
-            {filteredCountry.map((item, index) => {
-              return (
-                <li key={index} className="sidebar-item">
-                  <img alt="flag" src={item.flag} className="flag-item" />
-                  <span>{item.name}</span>
-                  <button
-                    className="btn btn-remove"
-                    onClick={() => dispatch(removeCountry(item))}
-                  >
-                    -
-                  </button>
-                </li>
-              );
-            })}
+            {country
+              .filter(curr =>
+                curr.name.toLowerCase().includes(searchField.toLowerCase())
+              )
+              .map((item, index) => {
+                return (
+                  <li key={index} className="sidebar-item">
+                    <img alt="flag" src={item.flag} className="flag-item" />
+                    <span>{item.name}</span>
+                    <button
+                      className="btn btn-remove"
+                      onClick={() => dispatch(removeCountry(item))}
+                    >
+                      -
+                    </button>
+                  </li>
+                );
+              })}
           </ul>
         </nav>
       </IconContext.Provider>

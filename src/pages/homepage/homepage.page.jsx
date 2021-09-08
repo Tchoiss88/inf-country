@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 import SearchBox from '../../components/search-box/search-box.component';
 import CountryList from '../../components/country-list/country-list.component';
@@ -8,6 +8,10 @@ import './homepage.styles.scss';
 const HomePage = () => {
   const [data, setData] = useState([]);
   const [foundCountry, setFoundCountry] = useState(data);
+  const filterRegions = useRef({
+    regions: [],
+    search: '',
+  });
 
   useEffect(() => {
     getAPI();
@@ -20,23 +24,40 @@ const HomePage = () => {
     setFoundCountry(infCountry);
   };
 
-  const region = [
+  const filterAndSearch = () => {
+    const countrySearch = data
+      .filter(country => {
+        return (
+          filterRegions.current.regions.length === 0 ||
+          filterRegions.current.regions.includes(country.region)
+        );
+      })
+      .filter(country => {
+        return country.name
+          .toLowerCase()
+          .startsWith(filterRegions.current.search.toLowerCase());
+      });
+    setFoundCountry(countrySearch);
+  };
+
+  const regions = [
     ...new Set(
       data.filter(item => item.region !== '').map(item => item.region)
     ),
   ];
 
-  const handleChange = e => {
-    let keyword = e.target.value;
+  const handleClick = name => {
+    const countryName = filterRegions.current.regions.indexOf(name);
+    countryName === -1
+      ? filterRegions.current.regions.push(name)
+      : filterRegions.current.regions.splice(countryName, 1);
+    console.log(name, countryName);
+    filterAndSearch();
+  };
 
-    if (keyword !== '') {
-      const results = data.filter(country => {
-        return country.name.toLowerCase().startsWith(keyword.toLowerCase());
-      });
-      setFoundCountry(results);
-    } else {
-      setFoundCountry(data);
-    }
+  const handleChange = e => {
+    filterRegions.current.search = e.target.value;
+    filterAndSearch();
   };
 
   return (
@@ -47,9 +68,14 @@ const HomePage = () => {
         handleChange={handleChange}
       />
       <div className="regions">
-        {region.map((item, i) => (
+        {regions.map((item, i) => (
           <div key={i} className="container">
-            <input className="input" type="checkbox" name={item} value={item} />
+            <input
+              className="input"
+              value={item}
+              type="checkbox"
+              onChange={() => handleClick(item)}
+            />
             <span className="checkmark">{item}</span>
           </div>
         ))}
