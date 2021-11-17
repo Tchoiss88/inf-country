@@ -18,7 +18,7 @@ const HomePage = () => {
   }, []);
 
   const getAPI = async () => {
-    const apiData = await fetch(`https://restcountries.eu/rest/v2/all`);
+    const apiData = await fetch(`https://restcountries.com/v3.1/all`);
     const infCountry = await apiData.json();
     setData(infCountry);
     setFoundCountry(infCountry);
